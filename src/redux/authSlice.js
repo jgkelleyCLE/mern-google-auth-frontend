@@ -14,7 +14,7 @@ const authSlice = createSlice({
             state.user = action.payload
             localStorage.setItem('mern_auth', JSON.stringify(state.user))
         },
-        logoutUser: (state, action) => {
+        logoutUser: (state) => {
             state.user = null
             localStorage.removeItem('mern_auth')
         }

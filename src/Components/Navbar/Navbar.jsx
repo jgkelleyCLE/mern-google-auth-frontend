@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux"
-import { NavContainer, NavHeader, StyledLink } from "./Navbar.styles"
+import { NavButton, NavButtonIcon, NavButtonText, NavContainer, NavHeader, StyledLink } from "./Navbar.styles"
 import { logoutUser } from "../../redux/authSlice"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import {toast} from 'react-toastify'
+import { FlexRow } from "../UI"
 
 
 const Navbar = () => {
@@ -13,19 +14,7 @@ const Navbar = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const logoutHandler = () => {
-    dispatch(logoutUser())
-    toast('Successfully logged out!', {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: true,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-  })
-  }
+  
 
   useEffect(()=> {
     if(!user){
@@ -37,15 +26,20 @@ const Navbar = () => {
 
   return (
     <NavContainer>
-        <StyledLink to="/"><NavHeader>MERN AUTH</NavHeader></StyledLink>
+        <StyledLink to={user ? "/" : "/login"}><NavHeader>MERN AUTH</NavHeader></StyledLink>
 
         {
           user ?  (
-            <div>
+            <FlexRow>
           
-          <StyledLink to="/profile">{user.username}</StyledLink>
-          <StyledLink onClick={logoutHandler}>Logout</StyledLink>
-          </div>
+          <StyledLink to="/profile">
+              <NavButton>
+              <NavButtonIcon src={user?.profilePicture} alt="" />
+                <NavButtonText className="capitalize">{user?.username}</NavButtonText>
+              </NavButton>
+            </StyledLink>
+         
+          </FlexRow>
           ) : (
           <div>
           <StyledLink to="/register">Register</StyledLink>
@@ -53,6 +47,7 @@ const Navbar = () => {
         </div>
           )
         }
+        
         
     </NavContainer>
   )

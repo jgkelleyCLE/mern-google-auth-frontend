@@ -9,6 +9,11 @@ export const FlexColumn = tw.div`
     w-full
 `
 
+export const FlexRow = tw.div`
+    flex
+    items-center
+    justify-center
+`
 
 export const ButtonSpinner = tw(ImSpinner8)`
     text-white

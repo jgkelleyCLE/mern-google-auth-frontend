@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import { setUser } from '../redux/authSlice'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import OAuth from '../Components/Auth/OAuth'
 
 const Register = () => {
 
@@ -91,7 +92,8 @@ const Register = () => {
           <StyledInput placeholder='Email' value={formData.email} onChange={(e)=> setFormData({ ...formData, email: e.target.value })} />
           <StyledInput placeholder='Password' value={formData.password} onChange={(e)=> setFormData({ ...formData, password: e.target.value })} />
           <FormButton type="submit">{isLoading ? <ButtonSpinner /> : 'Register'}</FormButton>
-          <GoogleButton className="">Continue With Google</GoogleButton>
+          
+          <OAuth />
           </StyledForm>
         </FormCard>
         <h1 className="mt-4">Have an account? <Link className="text-blue-500" to="/login">Sign in</Link></h1>
