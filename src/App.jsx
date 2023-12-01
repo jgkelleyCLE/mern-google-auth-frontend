@@ -4,6 +4,8 @@ import Register from './Pages/Register'
 import Login from './Pages/Login'
 import Profile from './Pages/Profile'
 import Navbar from './Components/Navbar/Navbar'
+import { ToastContainer, Slide } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
@@ -12,6 +14,7 @@ function App() {
     <>
      <Router>
       <Navbar />
+      <ToastContainer transition={Slide} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
