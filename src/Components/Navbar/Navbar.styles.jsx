@@ -40,5 +40,6 @@ export const NavButtonIcon = tw.img`
     w-10
     h-10
     rounded-full
+    object-cover
     mr-2
 `

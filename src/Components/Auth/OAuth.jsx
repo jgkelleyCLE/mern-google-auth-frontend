@@ -15,7 +15,69 @@ const OAuth = () => {
 
     const [googleLogin, { data: googleData, isLoading, isSuccess, isError, error }] = useGoogleLoginMutation()
 
-    // const handleGoogleClick = async() => {
+    
+
+    const handleGoogleAuth = async() => {
+
+        try {
+            
+            const provider = new GoogleAuthProvider()
+            const auth = getAuth(app)
+            const result = await signInWithPopup(auth, provider)
+
+            const formData = {
+                name: result.user.displayName,
+                email: result.user.email,
+                photo: result.user.photoURL
+            }
+
+            googleLogin(formData)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    useEffect(()=> {
+
+        if(isSuccess){
+            dispatch(setUser(googleData))
+            toast(`Logged in as ${googleData.username}`, toastCard)
+              navigate('/')
+        
+        }
+
+    }, [isSuccess])
+
+    useEffect(()=> {
+
+        if(isError){
+            toast(error?.data?.message, toastCard)
+        
+        }
+
+    }, [isError])
+
+  return (
+    <GoogleButton type="button" onClick={handleGoogleAuth}>OAuth</GoogleButton>
+  )
+}
+
+export default OAuth
+
+const toastCard = {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: true,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "dark",
+}
+
+// const handleGoogleClick = async() => {
 
     //     try {
             
@@ -45,70 +107,3 @@ const OAuth = () => {
     //     }
 
     // }
-
-    const handleGoogleAuth = async() => {
-
-        try {
-            
-            const provider = new GoogleAuthProvider()
-            const auth = getAuth(app)
-            const result = await signInWithPopup(auth, provider)
-
-            const formData = {
-                name: result.user.displayName,
-                email: result.user.email,
-                photo: result.user.photoURL
-            }
-
-            googleLogin(formData)
-
-        } catch (error) {
-            console.log(error)
-        }
-
-    }
-
-    useEffect(()=> {
-
-        if(isSuccess){
-            dispatch(setUser(googleData))
-            toast(`Logged in as ${googleData.username}`, {
-                position: "top-center",
-                autoClose: 2000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-              })
-              navigate('/')
-        
-        }
-
-    }, [isSuccess])
-
-    useEffect(()=> {
-
-        if(isError){
-            toast(error?.data?.message, {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-              })
-        
-        }
-
-    }, [isError])
-
-  return (
-    <GoogleButton type="button" onClick={handleGoogleAuth}>OAuth</GoogleButton>
-  )
-}
-
-export default OAuth
